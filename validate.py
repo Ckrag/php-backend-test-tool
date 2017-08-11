@@ -17,7 +17,7 @@ def arg(index):
 # print help
 def print_help():
     print("#############")
-    print("### --help ####")
+    print("## --help ###")
     print("#############")
     print("")
     print("# Iterates through directories (including provided folder root) and produces a GET requests to each path that contains an index.php file."
@@ -101,7 +101,14 @@ def make_report():
 
 
 def analyse_directory(relative_path):
-    url = "http://" + os.path.join(root_url, relative_path)
+
+    base_url = os.path.join(root_url, relative_path)
+
+    # Add a valid schema if no http is found. E.g. efter user just provided localhost
+    if base_url[0:4] is not "http":
+        url = "http://" + base_url
+    else:
+        url = base_url
 
     # Append slash at end if not already there (for instance if call to root path)
     url += "/" if url[-1] is not "/" else ""
